@@ -31,13 +31,24 @@ export default function App() {
     }
   }, []);
 
-  // For development: skip onboarding
   useEffect(() => {
-    if (process.env.NODE_ENV === 'development') {
-      // Uncomment to skip to date picker demo
-      // setCurrentScreen('datepicker');
+    // Handle URL parameters for direct navigation
+    const urlParams = new URLSearchParams(window.location.search);
+    const screenParam = urlParams.get('screen') as Screen;
+    
+    if (screenParam && ['onboarding', 'dashboard', 'wallet', 'apps', 'refs', 'social', 'nft', 'profile', 'datepicker'].includes(screenParam)) {
+      setCurrentScreen(screenParam);
+      if (['dashboard', 'wallet', 'apps', 'refs', 'social', 'nft'].includes(screenParam)) {
+        setActiveTab(screenParam);
+      }
     }
   }, []);
+
+  // Update URL when screen changes
+  const updateURL = (screen: Screen) => {
+    const newURL = screen === 'onboarding' ? '/' : `/?screen=${screen}`;
+    window.history.pushState({ screen }, '', newURL);
+  };
 
   const toggleTheme = () => {
     const newIsDarkMode = !isDarkMode;
@@ -55,35 +66,63 @@ export default function App() {
   const handleConnect = () => {
     setCurrentScreen('dashboard');
     setActiveTab('dashboard');
+    updateURL('dashboard');
   };
 
   const handleTabChange = (tab: string) => {
     setActiveTab(tab);
-    setCurrentScreen(tab as Screen);
+    const screen = tab as Screen;
+    setCurrentScreen(screen);
+    updateURL(screen);
   };
 
   const handleProfileClick = () => {
     setCurrentScreen('profile');
+    updateURL('profile');
   };
 
   const handleProfileClose = () => {
     setCurrentScreen('dashboard');
     setActiveTab('dashboard');
+    updateURL('dashboard');
   };
 
   const handleSocialAccess = () => {
     setCurrentScreen('social');
+    updateURL('social');
   };
 
   const handleRefsAccess = () => {
     setCurrentScreen('refs');
     setActiveTab('refs');
+    updateURL('refs');
   };
 
-  // Development helper to access date picker demo
   const handleDatePickerDemo = () => {
     setCurrentScreen('datepicker');
+    updateURL('datepicker');
   };
+
+  // Handle browser back/forward buttons
+  useEffect(() => {
+    const handlePopState = (event: PopStateEvent) => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const screenParam = urlParams.get('screen') as Screen;
+      
+      if (screenParam) {
+        setCurrentScreen(screenParam);
+        if (['dashboard', 'wallet', 'apps', 'refs', 'social', 'nft'].includes(screenParam)) {
+          setActiveTab(screenParam);
+        }
+      } else {
+        setCurrentScreen('onboarding');
+        setActiveTab('dashboard');
+      }
+    };
+
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
 
   const renderScreen = () => {
     switch (currentScreen) {
