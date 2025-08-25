@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Button } from './ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
-import { Gift, Share, Copy, CheckCircle, Share2, Users, Users2 } from 'lucide-react';
+import { Gift, Share, Copy, CheckCircle, Users } from 'lucide-react';
 import { toast } from 'sonner@2.0.3';
 import { useLanguage } from '../contexts/LanguageContext';
 
@@ -61,7 +61,7 @@ export function Refs() {
           <Card>
             <CardHeader className="pb-2">
               <CardTitle className="text-sm text-muted-foreground flex items-center gap-2">
-                <Users size={18} />
+                <Users size={16} />
                 {t('refs.activeRefs')}
               </CardTitle>
             </CardHeader>
@@ -73,7 +73,7 @@ export function Refs() {
           <Card>
             <CardHeader className="pb-2">
               <CardTitle className="text-sm text-muted-foreground flex items-center gap-2">
-                <Gift size={18} />
+                <Gift size={16} />
                 {t('refs.totalRewards')}
               </CardTitle>
             </CardHeader>
@@ -107,7 +107,7 @@ export function Refs() {
               className="w-full bg-green-600 hover:bg-green-700"
               disabled={parseFloat(referralStats.unclaimed) === 0}
             >
-              <Gift size={16} />
+              <Gift size={16} className="mr-2" />
               {language === 'ru' ? 'Вывести награды' : 'Withdraw Rewards'}
             </Button>
           </CardContent>
@@ -136,7 +136,7 @@ export function Refs() {
               </Button>
             </div>
             <Button onClick={handleShare} className="w-full">
-             <Share size={16} /> {t('refs.shareButton')}
+             <Share size={16} className="mr-2" /> {t('refs.shareButton')}
             </Button>
           </CardContent>
         </Card>

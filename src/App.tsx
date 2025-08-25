@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Toaster } from './components/ui/sonner';
 import { LanguageProvider } from './contexts/LanguageContext';
+import { ErrorBoundary } from './components/ErrorBoundary';
 import { Onboarding } from './components/Onboarding';
 import { Dashboard } from './components/Dashboard';
 import { Navigation } from './components/Navigation';
@@ -22,134 +23,183 @@ export default function App() {
   const [isInitialized, setIsInitialized] = useState(false);
 
   useEffect(() => {
-    // Load theme from localStorage
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme === 'dark') {
-      setIsDarkMode(true);
-      document.documentElement.classList.add('dark');
-    } else {
-      setIsDarkMode(false);
-      document.documentElement.classList.remove('dark');
-    }
-
-    // Check if onboarding was completed
-    const onboardingCompleted = localStorage.getItem('onboarding-completed');
-    const isCompleted = onboardingCompleted === 'true';
-    setIsOnboardingCompleted(isCompleted);
-
-    // Handle URL parameters for direct navigation
-    const urlParams = new URLSearchParams(window.location.search);
-    const screenParam = urlParams.get('screen') as Screen;
-    
-    // If there's a screen parameter and onboarding is completed, navigate to that screen
-    if (screenParam && isCompleted && ['dashboard', 'wallet', 'apps', 'refs', 'social', 'nft', 'profile', 'datepicker'].includes(screenParam)) {
-      setCurrentScreen(screenParam);
-      if (['dashboard', 'wallet', 'apps', 'refs', 'social', 'nft'].includes(screenParam)) {
-        setActiveTab(screenParam);
+    try {
+      // Load theme from localStorage
+      const savedTheme = localStorage.getItem('theme');
+      if (savedTheme === 'dark') {
+        setIsDarkMode(true);
+        document.documentElement.classList.add('dark');
+      } else {
+        setIsDarkMode(false);
+        document.documentElement.classList.remove('dark');
       }
-    } else if (isCompleted) {
-      // If onboarding is completed but no specific screen, go to dashboard
-      setCurrentScreen('dashboard');
-      setActiveTab('dashboard');
-    } else {
-      // If onboarding is not completed, show onboarding
-      setCurrentScreen('onboarding');
-    }
 
-    setIsInitialized(true);
+      // Check if onboarding was completed
+      const onboardingCompleted = localStorage.getItem('onboarding-completed');
+      const isCompleted = onboardingCompleted === 'true';
+      setIsOnboardingCompleted(isCompleted);
+
+      // Handle URL parameters for direct navigation
+      const urlParams = new URLSearchParams(window.location.search);
+      const screenParam = urlParams.get('screen') as Screen;
+      
+      // If there's a screen parameter and onboarding is completed, navigate to that screen
+      if (screenParam && isCompleted && ['dashboard', 'wallet', 'apps', 'refs', 'social', 'nft', 'profile', 'datepicker'].includes(screenParam)) {
+        setCurrentScreen(screenParam);
+        if (['dashboard', 'wallet', 'apps', 'refs', 'social', 'nft'].includes(screenParam)) {
+          setActiveTab(screenParam);
+        }
+      } else if (isCompleted) {
+        // If onboarding is completed but no specific screen, go to dashboard
+        setCurrentScreen('dashboard');
+        setActiveTab('dashboard');
+      } else {
+        // If onboarding is not completed, show onboarding
+        setCurrentScreen('onboarding');
+      }
+
+      setIsInitialized(true);
+    } catch (error) {
+      console.error('Error during app initialization:', error);
+      setIsInitialized(true); // Still allow the app to render
+    }
   }, []);
 
   // Update URL when screen changes
   const updateURL = (screen: Screen) => {
-    const newURL = screen === 'onboarding' ? '/' : `/?screen=${screen}`;
-    window.history.pushState({ screen }, '', newURL);
+    try {
+      const newURL = screen === 'onboarding' ? '/' : `/?screen=${screen}`;
+      window.history.pushState({ screen }, '', newURL);
+    } catch (error) {
+      console.error('Error updating URL:', error);
+    }
   };
 
   const toggleTheme = () => {
-    const newIsDarkMode = !isDarkMode;
-    setIsDarkMode(newIsDarkMode);
-    
-    if (newIsDarkMode) {
-      document.documentElement.classList.add('dark');
-      localStorage.setItem('theme', 'dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-      localStorage.setItem('theme', 'light');
+    try {
+      const newIsDarkMode = !isDarkMode;
+      setIsDarkMode(newIsDarkMode);
+      
+      if (newIsDarkMode) {
+        document.documentElement.classList.add('dark');
+        localStorage.setItem('theme', 'dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+        localStorage.setItem('theme', 'light');
+      }
+    } catch (error) {
+      console.error('Error toggling theme:', error);
     }
   };
 
   const handleConnect = () => {
-    // Mark onboarding as completed
-    localStorage.setItem('onboarding-completed', 'true');
-    setIsOnboardingCompleted(true);
-    
-    setCurrentScreen('dashboard');
-    setActiveTab('dashboard');
-    updateURL('dashboard');
+    try {
+      // Mark onboarding as completed
+      localStorage.setItem('onboarding-completed', 'true');
+      setIsOnboardingCompleted(true);
+      
+      setCurrentScreen('dashboard');
+      setActiveTab('dashboard');
+      updateURL('dashboard');
+    } catch (error) {
+      console.error('Error handling connect:', error);
+    }
   };
 
   const handleTabChange = (tab: string) => {
-    setActiveTab(tab);
-    const screen = tab as Screen;
-    setCurrentScreen(screen);
-    updateURL(screen);
+    try {
+      setActiveTab(tab);
+      const screen = tab as Screen;
+      setCurrentScreen(screen);
+      updateURL(screen);
+    } catch (error) {
+      console.error('Error changing tab:', error);
+    }
   };
 
   const handleProfileClick = () => {
-    setCurrentScreen('profile');
-    updateURL('profile');
+    try {
+      setCurrentScreen('profile');
+      updateURL('profile');
+    } catch (error) {
+      console.error('Error opening profile:', error);
+    }
   };
 
   const handleProfileClose = () => {
-    setCurrentScreen('dashboard');
-    setActiveTab('dashboard');
-    updateURL('dashboard');
+    try {
+      setCurrentScreen('dashboard');
+      setActiveTab('dashboard');
+      updateURL('dashboard');
+    } catch (error) {
+      console.error('Error closing profile:', error);
+    }
   };
 
   const handleSocialAccess = () => {
-    setCurrentScreen('social');
-    updateURL('social');
+    try {
+      setCurrentScreen('social');
+      updateURL('social');
+    } catch (error) {
+      console.error('Error accessing social:', error);
+    }
   };
 
   const handleRefsAccess = () => {
-    setCurrentScreen('refs');
-    setActiveTab('refs');
-    updateURL('refs');
+    try {
+      setCurrentScreen('refs');
+      setActiveTab('refs');
+      updateURL('refs');
+    } catch (error) {
+      console.error('Error accessing refs:', error);
+    }
   };
 
   const handleDatePickerDemo = () => {
-    setCurrentScreen('datepicker');
-    updateURL('datepicker');
+    try {
+      setCurrentScreen('datepicker');
+      updateURL('datepicker');
+    } catch (error) {
+      console.error('Error opening date picker demo:', error);
+    }
   };
 
   // Reset onboarding (for development/testing purposes)
   const handleResetOnboarding = () => {
-    localStorage.removeItem('onboarding-completed');
-    setIsOnboardingCompleted(false);
-    setCurrentScreen('onboarding');
-    updateURL('onboarding');
+    try {
+      localStorage.removeItem('onboarding-completed');
+      setIsOnboardingCompleted(false);
+      setCurrentScreen('onboarding');
+      updateURL('onboarding');
+    } catch (error) {
+      console.error('Error resetting onboarding:', error);
+    }
   };
 
   // Handle browser back/forward buttons
   useEffect(() => {
     const handlePopState = (event: PopStateEvent) => {
-      if (!isOnboardingCompleted) {
-        // If onboarding is not completed, always show onboarding
-        setCurrentScreen('onboarding');
-        return;
-      }
-
-      const urlParams = new URLSearchParams(window.location.search);
-      const screenParam = urlParams.get('screen') as Screen;
-      
-      if (screenParam && ['dashboard', 'wallet', 'apps', 'refs', 'social', 'nft', 'profile', 'datepicker'].includes(screenParam)) {
-        setCurrentScreen(screenParam);
-        if (['dashboard', 'wallet', 'apps', 'refs', 'social', 'nft'].includes(screenParam)) {
-          setActiveTab(screenParam);
+      try {
+        if (!isOnboardingCompleted) {
+          // If onboarding is not completed, always show onboarding
+          setCurrentScreen('onboarding');
+          return;
         }
-      } else {
-        setCurrentScreen('dashboard');
-        setActiveTab('dashboard');
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const screenParam = urlParams.get('screen') as Screen;
+        
+        if (screenParam && ['dashboard', 'wallet', 'apps', 'refs', 'social', 'nft', 'profile', 'datepicker'].includes(screenParam)) {
+          setCurrentScreen(screenParam);
+          if (['dashboard', 'wallet', 'apps', 'refs', 'social', 'nft'].includes(screenParam)) {
+            setActiveTab(screenParam);
+          }
+        } else {
+          setCurrentScreen('dashboard');
+          setActiveTab('dashboard');
+        }
+      } catch (error) {
+        console.error('Error handling popstate:', error);
       }
     };
 
@@ -158,48 +208,66 @@ export default function App() {
   }, [isOnboardingCompleted]);
 
   const renderScreen = () => {
-    switch (currentScreen) {
-      case 'onboarding':
-        return <Onboarding onConnect={handleConnect} />;
-      case 'dashboard':
-        return (
-          <Dashboard 
-            onProfileClick={handleProfileClick} 
-            onSocialClick={handleSocialAccess}
-            onRefsClick={handleRefsAccess}
-          />
-        );
-      case 'wallet':
-        return <Wallet />;
-      case 'apps':
-        return <Apps onDatePickerDemo={handleDatePickerDemo} />;
-      case 'refs':
-        return <Refs />;
-      case 'social':
-        return <Social />;
-      case 'nft':
-        return <NFT />;
-      case 'profile':
-        return (
-          <Profile 
-            onClose={handleProfileClose} 
-            isDarkMode={isDarkMode}
-            onToggleTheme={toggleTheme}
-            onResetOnboarding={handleResetOnboarding}
-          />
-        );
-      case 'datepicker':
-        return <DatePickerDemo />;
-      default:
-        return isOnboardingCompleted ? (
-          <Dashboard 
-            onProfileClick={handleProfileClick} 
-            onSocialClick={handleSocialAccess}
-            onRefsClick={handleRefsAccess}
-          />
-        ) : (
-          <Onboarding onConnect={handleConnect} />
-        );
+    try {
+      switch (currentScreen) {
+        case 'onboarding':
+          return <Onboarding onConnect={handleConnect} />;
+        case 'dashboard':
+          return (
+            <Dashboard 
+              onProfileClick={handleProfileClick} 
+              onSocialClick={handleSocialAccess}
+              onRefsClick={handleRefsAccess}
+            />
+          );
+        case 'wallet':
+          return <Wallet />;
+        case 'apps':
+          return <Apps onDatePickerDemo={handleDatePickerDemo} />;
+        case 'refs':
+          return <Refs />;
+        case 'social':
+          return <Social />;
+        case 'nft':
+          return <NFT />;
+        case 'profile':
+          return (
+            <Profile 
+              onClose={handleProfileClose} 
+              isDarkMode={isDarkMode}
+              onToggleTheme={toggleTheme}
+              onResetOnboarding={handleResetOnboarding}
+            />
+          );
+        case 'datepicker':
+          return <DatePickerDemo />;
+        default:
+          return isOnboardingCompleted ? (
+            <Dashboard 
+              onProfileClick={handleProfileClick} 
+              onSocialClick={handleSocialAccess}
+              onRefsClick={handleRefsAccess}
+            />
+          ) : (
+            <Onboarding onConnect={handleConnect} />
+          );
+      }
+    } catch (error) {
+      console.error('Error rendering screen:', error);
+      return (
+        <div className="min-h-screen bg-background flex items-center justify-center p-6">
+          <div className="text-center">
+            <div className="text-4xl mb-4">⚠️</div>
+            <h1 className="text-xl font-semibold mb-2">Ошибка загрузки экрана</h1>
+            <button
+              onClick={() => window.location.reload()}
+              className="px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors"
+            >
+              Обновить страницу
+            </button>
+          </div>
+        </div>
+      );
     }
   };
 
@@ -218,14 +286,16 @@ export default function App() {
   }
 
   return (
-    <LanguageProvider>
-      <div className="min-h-screen bg-background max-w-md mx-auto relative">
-        {renderScreen()}
-        {showNavigation && (
-          <Navigation activeTab={activeTab} onTabChange={handleTabChange} />
-        )}
-        <Toaster />
-      </div>
-    </LanguageProvider>
+    <ErrorBoundary>
+      <LanguageProvider>
+        <div className="min-h-screen bg-background max-w-md mx-auto relative">
+          {renderScreen()}
+          {showNavigation && (
+            <Navigation activeTab={activeTab} onTabChange={handleTabChange} />
+          )}
+          <Toaster />
+        </div>
+      </LanguageProvider>
+    </ErrorBoundary>
   );
 }
