@@ -13,7 +13,7 @@ import { useNFTCollection } from '../hooks/useNFTCollection';
 import { NFTUtils, getGemsAPI, MANETKA_COLLECTION_ADDRESS } from '../utils/getgems-api';
 
 export function NFT() {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   
   const {
     collection,
@@ -89,29 +89,29 @@ export function NFT() {
             </div>
             
             <Button 
-              size="16"
+              size="sm"
               className={`${NFTUtils.getRarityColor(nft.rarity)} text-xs h-5 px-1.5 py-0.5 hover:opacity-100 cursor-default pointer-events-none`}
             >
               <RarityIcon size={16} className="mr-1" />
-              {nft.rarity}
+              {t(`nft.rarity.${nft.rarity.toLowerCase()}`)}
             </Button>
             
             <div className="text-xs text-muted-foreground">
               <span className={`font-medium ${nft.owned ? 'text-primary' : 'text-muted-foreground'}`}>
-                +{nft.boost}%
-              </span> буст
+                {t(`nft.boost.${nft.rarity.toLowerCase()}`)}
+              </span>
             </div>
             
             <div className="flex items-center justify-between">
               <div className="font-semibold text-sm">{nft.price}</div>
               <Button 
-                size="16" 
+                size="sm" 
                 variant={nft.owned ? "outline" : "default"}
                 className="h-7 px-2 text-xs"
                 onClick={() => nft.owned ? handleSellNFT(nft.address) : handleBuyNFT(nft.address)}
                 disabled={!nft.forSale && !nft.owned}
               >
-                {nft.owned ? t.sell : t.buy}
+                {nft.owned ? t('common.sell') : t('common.buy')}
                 <ExternalLink size={16} className="ml-1" />
               </Button>
             </div>
@@ -190,7 +190,7 @@ export function NFT() {
         {/* Header with collection info */}
         <div className="flex justify-between items-center mb-6">
           <div>
-            <h1 className="text-2xl font-semibold">{t.nftCollection}</h1>
+            <h1 className="text-2xl font-semibold">{t('nft.title')}</h1>
             {collection && (
               <div className="text-sm text-muted-foreground mt-1">
                 {collection.items_count} NFT
@@ -246,7 +246,7 @@ export function NFT() {
           <CardHeader>
             <CardTitle className="text-amber-800 dark:text-amber-200 flex items-center gap-2">
               <Zap size={20} />
-              {t.yourBoosts}
+              Ваши бусты
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -255,13 +255,13 @@ export function NFT() {
                 <div className="text-2xl font-semibold text-amber-900 dark:text-amber-100">
                   {isLoading ? <Skeleton className="h-8 w-16 mx-auto" /> : `+${totalBoost}%`}
                 </div>
-                <div className="text-sm text-amber-700 dark:text-amber-300">{t.holdBoost}</div>
+                <div className="text-sm text-amber-700 dark:text-amber-300">Буст владения</div>
               </div>
               <div className="text-center">
                 <div className="text-2xl font-semibold text-amber-900 dark:text-amber-100">
                   {isLoading ? <Skeleton className="h-8 w-16 mx-auto" /> : `+${totalBoost}%`}
                 </div>
-                <div className="text-sm text-amber-700 dark:text-amber-300">{t.refBoost}</div>
+                <div className="text-sm text-amber-700 dark:text-amber-300">Реферальный буст</div>
               </div>
             </div>
             {!isLoading && (
@@ -269,7 +269,7 @@ export function NFT() {
                 {totalBoost < maxPossibleBoost && (
                   <div className="p-3 bg-yellow-50 border border-yellow-200 rounded-lg dark:bg-yellow-900/20 dark:border-yellow-800">
                     <p className="text-sm text-yellow-800 dark:text-yellow-300">
-                      💡 {t.collectTip}
+                      💡 Соберите больше NFT для увеличения буста!
                     </p>
                   </div>
                 )}
@@ -299,19 +299,19 @@ export function NFT() {
               <SelectItem value="RARE">
                 <div className="flex items-center gap-2">
                   <Star size={16} className="text-blue-500" />
-                  Rare
+                  {t('nft.rarity.rare')}
                 </div>
               </SelectItem>
               <SelectItem value="EPIC">
                 <div className="flex items-center gap-2">
                   <Zap size={16} className="text-purple-500" />
-                  Epic
+                  {t('nft.rarity.epic')}
                 </div>
               </SelectItem>
               <SelectItem value="LEGENDARY">
                 <div className="flex items-center gap-2">
                   <Crown size={16} className="text-amber-500" />
-                  Legendary
+                  {t('nft.rarity.legendary')}
                 </div>
               </SelectItem>
             </SelectContent>
@@ -341,10 +341,10 @@ export function NFT() {
             <Tabs defaultValue="my" className="w-full">
               <TabsList className="grid w-full grid-cols-2">
                 <TabsTrigger value="my">
-                  Мои ({myNFTs.length})
+                  {t('nft.myCollection')} ({myNFTs.length})
                 </TabsTrigger>
                 <TabsTrigger value="market">
-                  На продаже ({marketNFTs.length})
+                  {t('nft.marketplace')} ({marketNFTs.length})
                 </TabsTrigger>
               </TabsList>
 
@@ -365,7 +365,7 @@ export function NFT() {
                         variant="outline"
                       >
                         <ExternalLink size={16} className="mr-2" />
-                        Открыть на GetGems
+                        {t('nft.viewOnExplorer')}
                       </Button>
                     </div>
                   </Card>
@@ -390,7 +390,7 @@ export function NFT() {
                           {isLoadingMore ? (
                             <>
                               <RefreshCw size={16} className="mr-2 animate-spin" />
-                              Загрузка...
+                              {t('common.loading')}
                             </>
                           ) : (
                             'Загрузить еще'
@@ -411,7 +411,7 @@ export function NFT() {
                         variant="outline"
                       >
                         <ExternalLink size={16} className="mr-2" />
-                        Открыть на GetGems
+                        {t('nft.viewOnExplorer')}
                       </Button>
                     </div>
                   </Card>
@@ -424,18 +424,18 @@ export function NFT() {
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <TrendingUp size={20} />
-                  {t.aboutCollection}
+                  О коллекции
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-3">
                 {collection && (
                   <>
                     <div className="flex justify-between">
-                      <span className="text-muted-foreground">{t.totalNFTs}:</span>
+                      <span className="text-muted-foreground">Всего NFT:</span>
                       <span className="font-semibold">{collection.items_count}</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-muted-foreground">{t.youHave}:</span>
+                      <span className="text-muted-foreground">У вас:</span>
                       <span className="font-semibold">{myNFTs.length}</span>
                     </div>
                     {collection.floor_price && (
@@ -452,7 +452,7 @@ export function NFT() {
                   <p className="text-sm text-foreground">
                     🎯 {isUsingMockData 
                       ? "Демо-коллекция демонстрирует полный функционал MANETKA NFT системы" 
-                      : t.marketplaceInfo
+                      : "Все транзакции проходят через GetGems маркетплейс"
                     }
                   </p>
                 </div>

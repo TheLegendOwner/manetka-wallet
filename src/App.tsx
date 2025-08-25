@@ -18,6 +18,8 @@ export default function App() {
   const [currentScreen, setCurrentScreen] = useState<Screen>('onboarding');
   const [activeTab, setActiveTab] = useState('dashboard');
   const [isDarkMode, setIsDarkMode] = useState(false);
+  const [isOnboardingCompleted, setIsOnboardingCompleted] = useState(false);
+  const [isInitialized, setIsInitialized] = useState(false);
 
   useEffect(() => {
     // Load theme from localStorage
@@ -29,19 +31,32 @@ export default function App() {
       setIsDarkMode(false);
       document.documentElement.classList.remove('dark');
     }
-  }, []);
 
-  useEffect(() => {
+    // Check if onboarding was completed
+    const onboardingCompleted = localStorage.getItem('onboarding-completed');
+    const isCompleted = onboardingCompleted === 'true';
+    setIsOnboardingCompleted(isCompleted);
+
     // Handle URL parameters for direct navigation
     const urlParams = new URLSearchParams(window.location.search);
     const screenParam = urlParams.get('screen') as Screen;
     
-    if (screenParam && ['onboarding', 'dashboard', 'wallet', 'apps', 'refs', 'social', 'nft', 'profile', 'datepicker'].includes(screenParam)) {
+    // If there's a screen parameter and onboarding is completed, navigate to that screen
+    if (screenParam && isCompleted && ['dashboard', 'wallet', 'apps', 'refs', 'social', 'nft', 'profile', 'datepicker'].includes(screenParam)) {
       setCurrentScreen(screenParam);
       if (['dashboard', 'wallet', 'apps', 'refs', 'social', 'nft'].includes(screenParam)) {
         setActiveTab(screenParam);
       }
+    } else if (isCompleted) {
+      // If onboarding is completed but no specific screen, go to dashboard
+      setCurrentScreen('dashboard');
+      setActiveTab('dashboard');
+    } else {
+      // If onboarding is not completed, show onboarding
+      setCurrentScreen('onboarding');
     }
+
+    setIsInitialized(true);
   }, []);
 
   // Update URL when screen changes
@@ -64,6 +79,10 @@ export default function App() {
   };
 
   const handleConnect = () => {
+    // Mark onboarding as completed
+    localStorage.setItem('onboarding-completed', 'true');
+    setIsOnboardingCompleted(true);
+    
     setCurrentScreen('dashboard');
     setActiveTab('dashboard');
     updateURL('dashboard');
@@ -103,26 +122,40 @@ export default function App() {
     updateURL('datepicker');
   };
 
+  // Reset onboarding (for development/testing purposes)
+  const handleResetOnboarding = () => {
+    localStorage.removeItem('onboarding-completed');
+    setIsOnboardingCompleted(false);
+    setCurrentScreen('onboarding');
+    updateURL('onboarding');
+  };
+
   // Handle browser back/forward buttons
   useEffect(() => {
     const handlePopState = (event: PopStateEvent) => {
+      if (!isOnboardingCompleted) {
+        // If onboarding is not completed, always show onboarding
+        setCurrentScreen('onboarding');
+        return;
+      }
+
       const urlParams = new URLSearchParams(window.location.search);
       const screenParam = urlParams.get('screen') as Screen;
       
-      if (screenParam) {
+      if (screenParam && ['dashboard', 'wallet', 'apps', 'refs', 'social', 'nft', 'profile', 'datepicker'].includes(screenParam)) {
         setCurrentScreen(screenParam);
         if (['dashboard', 'wallet', 'apps', 'refs', 'social', 'nft'].includes(screenParam)) {
           setActiveTab(screenParam);
         }
       } else {
-        setCurrentScreen('onboarding');
+        setCurrentScreen('dashboard');
         setActiveTab('dashboard');
       }
     };
 
     window.addEventListener('popstate', handlePopState);
     return () => window.removeEventListener('popstate', handlePopState);
-  }, []);
+  }, [isOnboardingCompleted]);
 
   const renderScreen = () => {
     switch (currentScreen) {
@@ -152,22 +185,37 @@ export default function App() {
             onClose={handleProfileClose} 
             isDarkMode={isDarkMode}
             onToggleTheme={toggleTheme}
+            onResetOnboarding={handleResetOnboarding}
           />
         );
       case 'datepicker':
         return <DatePickerDemo />;
       default:
-        return (
+        return isOnboardingCompleted ? (
           <Dashboard 
             onProfileClick={handleProfileClick} 
             onSocialClick={handleSocialAccess}
             onRefsClick={handleRefsAccess}
           />
+        ) : (
+          <Onboarding onConnect={handleConnect} />
         );
     }
   };
 
   const showNavigation = currentScreen !== 'onboarding' && currentScreen !== 'profile' && currentScreen !== 'datepicker';
+
+  // Don't render anything until initialization is complete
+  if (!isInitialized) {
+    return (
+      <div className="min-h-screen bg-background max-w-md mx-auto relative flex items-center justify-center">
+        <div className="flex flex-col items-center space-y-4">
+          <div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin"></div>
+          <p className="text-muted-foreground">Loading...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <LanguageProvider>

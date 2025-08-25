@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Button } from './ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
-import { Users, Gift, Share, Copy, CheckCircle, Share2 } from 'lucide-react';
+import { Gift, Share, Copy, CheckCircle, Share2, Users, Users2 } from 'lucide-react';
 import { toast } from 'sonner@2.0.3';
 import { useLanguage } from '../contexts/LanguageContext';
 
@@ -54,15 +54,15 @@ export function Refs() {
   return (
     <div className="min-h-screen bg-background pb-32">
       <div className="p-6">
-        <h1 className="text-2xl font-semibold mb-6">{t.refs}</h1>
+        <h1 className="text-2xl font-semibold mb-6">{t('refs.title')}</h1>
 
         {/* Stats Cards */}
         <div className="grid grid-cols-2 gap-4 mb-6">
           <Card>
             <CardHeader className="pb-2">
               <CardTitle className="text-sm text-muted-foreground flex items-center gap-2">
-                <Users size={16} />
-                {t.refs}
+                <Users size={18} />
+                {t('refs.activeRefs')}
               </CardTitle>
             </CardHeader>
             <CardContent>
@@ -73,8 +73,8 @@ export function Refs() {
           <Card>
             <CardHeader className="pb-2">
               <CardTitle className="text-sm text-muted-foreground flex items-center gap-2">
-                <Gift size={16} />
-                {t.totalEarned}
+                <Gift size={18} />
+                {t('refs.totalRewards')}
               </CardTitle>
             </CardHeader>
             <CardContent>
@@ -93,7 +93,7 @@ export function Refs() {
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="flex justify-between items-center">
-              <span className="text-green-700 dark:text-green-300">{t.pending}:</span>
+              <span className="text-green-700 dark:text-green-300">{t('refs.pendingRewards')}:</span>
               <span className="text-2xl font-semibold text-green-800 dark:text-green-200">{referralStats.unclaimed} TON</span>
             </div>
             <div className="flex justify-between items-center">
@@ -118,7 +118,7 @@ export function Refs() {
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <Share size={20} />
-              {t.yourReferralLink}
+              {t('refs.referralLink')}
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
@@ -136,7 +136,7 @@ export function Refs() {
               </Button>
             </div>
             <Button onClick={handleShare} className="w-full">
-             <Share size={16} /> {t.shareLink}
+             <Share size={16} /> {t('refs.shareButton')}
             </Button>
           </CardContent>
         </Card>

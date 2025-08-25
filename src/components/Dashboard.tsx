@@ -114,7 +114,7 @@ export function Dashboard({ onProfileClick, onSocialClick, onRefsClick }: Dashbo
             <CardHeader className="pb-2">
               <CardTitle className="text-sm text-muted-foreground flex items-center gap-2">
                 <DollarSign size={16} />
-                {t.myBalance}
+                {t('dashboard.balance')}
               </CardTitle>
             </CardHeader>
             <CardContent>
@@ -126,13 +126,13 @@ export function Dashboard({ onProfileClick, onSocialClick, onRefsClick }: Dashbo
             <CardHeader className="pb-2">
               <CardTitle className="text-sm text-amber-800 dark:text-amber-200 flex items-center gap-2">
                 <Coins size={16} />
-                {t.tonRewards}
+                {t('dashboard.tonRewards')}
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-1">
               <div className="text-2xl font-semibold text-amber-900 dark:text-amber-100">{tonBalance}</div>
               <div className="text-xs text-amber-700 dark:text-amber-300">
-                +{dailyIncome} {t.today}
+                +{dailyIncome} {t('dashboard.todayEarnings')}
               </div>
             </CardContent>
           </Card>
@@ -141,10 +141,10 @@ export function Dashboard({ onProfileClick, onSocialClick, onRefsClick }: Dashbo
         {/* Action Buttons */}
         <div className="grid grid-cols-2 gap-4">
           <Button className="py-6 bg-primary hover:bg-primary/90">
-            {t.buy} $MNTK
+            {t('common.buy')} $MNTK
           </Button>
           <Button variant="outline" className="py-6 border-primary text-primary hover:bg-primary/10">
-            {t.sell} $MNTK
+            {t('common.sell')} $MNTK
           </Button>
         </div>
 
@@ -154,13 +154,13 @@ export function Dashboard({ onProfileClick, onSocialClick, onRefsClick }: Dashbo
             <CardTitle className="flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <Zap size={20} className="text-primary" />
-                {t.activeBoosts}
+                {t('dashboard.activeBoosters')}
               </div>
               {isLoadingNFTs ? (
                 <Skeleton className="h-5 w-20" />
               ) : (
                 <Badge className="h-5 px-2 text-xs bg-primary/10 text-primary border-primary/20">
-                  +{totalBoost}% {t.nftBoost}
+                  +{totalBoost}% {t('dashboard.boost')}
                 </Badge>
               )}
             </CardTitle>
@@ -201,7 +201,7 @@ export function Dashboard({ onProfileClick, onSocialClick, onRefsClick }: Dashbo
                       <div className={`font-medium text-sm ${boost.owned ? '' : 'text-muted-foreground'}`}>
                         {boost.name}
                       </div>
-                      <div className="text-xs text-muted-foreground">{t.floor}: {boost.floorPrice}</div>
+                      <div className="text-xs text-muted-foreground">Floor: {boost.floorPrice}</div>
                     </div>
                   </div>
                   {boost.owned ? (
@@ -222,7 +222,7 @@ export function Dashboard({ onProfileClick, onSocialClick, onRefsClick }: Dashbo
                       onClick={() => handleBuyBoost(boost.name)}
                       className="h-6 px-3 text-xs bg-primary hover:bg-primary/90"
                     >
-                      {t.buy}
+                      {t('common.buy')}
                     </Button>
                   )}
                 </div>
@@ -251,7 +251,7 @@ export function Dashboard({ onProfileClick, onSocialClick, onRefsClick }: Dashbo
             <CardTitle className="flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <Wallet2 size={20} className="text-primary" />
-                {t.connectedWallets}
+                {t('dashboard.connectedWallets')}
               </div>
               <Dialog open={isHelpDialogOpen} onOpenChange={setIsHelpDialogOpen}>
                 <DialogTrigger asChild>
@@ -261,10 +261,10 @@ export function Dashboard({ onProfileClick, onSocialClick, onRefsClick }: Dashbo
                 </DialogTrigger>
                 <DialogContent className="max-w-sm mx-auto">
                   <DialogHeader>
-                    <DialogTitle>{t.walletInfo}</DialogTitle>
+                    <DialogTitle>{t('profile.walletSettings')}</DialogTitle>
                     <DialogDescription className="text-left space-y-2">
-                      <div>{t.walletInfoDescription}</div>
-                      <div>{t.walletInfoNote}</div>
+                      <div>Управляйте подключенными кошельками</div>
+                      <div>Установите основной кошелек для транзакций</div>
                     </DialogDescription>
                   </DialogHeader>
                 </DialogContent>
@@ -284,7 +284,7 @@ export function Dashboard({ onProfileClick, onSocialClick, onRefsClick }: Dashbo
                       {wallet.isPrimary && (
                         <Badge className="h-5 px-2 text-xs bg-primary/10 text-primary border-primary/20">
                           <Star size={16} className="mr-1 fill-amber-500 text-amber-500" />
-                          {t.primary}
+                          Основной
                         </Badge>
                       )}
                     </div>
@@ -323,7 +323,7 @@ export function Dashboard({ onProfileClick, onSocialClick, onRefsClick }: Dashbo
               onClick={handleConnectNewWallet}
             >
               <Plus size={16} className="text-primary" />
-              {t.connectTONWallet}
+              {t('onboarding.connectWallet')}
             </Button>
           </CardContent>
         </Card>
@@ -334,7 +334,7 @@ export function Dashboard({ onProfileClick, onSocialClick, onRefsClick }: Dashbo
             <CardContent className="p-4 text-center">
               <div className="flex flex-col items-center gap-2">
                 <Share2 size={24} className="text-primary" />
-                <span className="text-sm font-medium">{t.socialNetworks}</span>
+                <span className="text-sm font-medium">{t('nav.social')}</span>
               </div>
             </CardContent>
           </Card>
@@ -343,7 +343,7 @@ export function Dashboard({ onProfileClick, onSocialClick, onRefsClick }: Dashbo
             <CardContent className="p-4 text-center">
               <div className="flex flex-col items-center gap-2">
                 <Users size={24} className="text-primary" />
-                <span className="text-sm font-medium">{t.inviteFriend}</span>
+                <span className="text-sm font-medium">{t('refs.inviteButton')}</span>
               </div>
             </CardContent>
           </Card>

@@ -9,13 +9,13 @@ interface AppsProps {
 }
 
 export function Apps({ onDatePickerDemo }: AppsProps) {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
 
   const apps = [
     {
       id: 'datepicker',
-      name: t.language === 'ru' ? 'Демо: Выбор дат' : 'Demo: Date Pickers',
-      description: t.language === 'ru' ? 'Демонстрация компонентов выбора дат' : 'Date picker components showcase',
+      name: language === 'ru' ? 'Демо: Выбор дат' : 'Demo: Date Pickers',
+      description: language === 'ru' ? 'Демонстрация компонентов выбора дат' : 'Date picker components showcase',
       icon: Calendar,
       category: 'demo',
       status: 'available',
@@ -23,40 +23,40 @@ export function Apps({ onDatePickerDemo }: AppsProps) {
     },
     {
       id: 'staking',
-      name: t.language === 'ru' ? 'MANETKA Стейкинг' : 'MANETKA Staking',
-      description: t.language === 'ru' ? 'Заблокируйте токены и получайте награды' : 'Lock tokens and earn rewards',
+      name: language === 'ru' ? 'MANETKA Стейкинг' : 'MANETKA Staking',
+      description: language === 'ru' ? 'Заблокируйте токены и получайте награды' : 'Lock tokens and earn rewards',
       icon: TrendingUp,
       category: 'defi',
       status: 'available'
     },
     {
       id: 'gaming',
-      name: t.language === 'ru' ? 'MANETKA Игры' : 'MANETKA Gaming',
-      description: t.language === 'ru' ? 'Играйте и зарабатывайте токены' : 'Play games and earn tokens',
+      name: language === 'ru' ? 'MANETKA Игры' : 'MANETKA Gaming',
+      description: language === 'ru' ? 'Играйте и зарабатывайте токены' : 'Play games and earn tokens',
       icon: Gamepad2,
       category: 'gaming',
       status: 'coming_soon'
     },
     {
       id: 'governance',
-      name: t.language === 'ru' ? 'Управление' : 'Governance',
-      description: t.language === 'ru' ? 'Голосуйте за предложения сообщества' : 'Vote on community proposals',
+      name: language === 'ru' ? 'Управление' : 'Governance',
+      description: language === 'ru' ? 'Голосуйте за предложения сообщества' : 'Vote on community proposals',
       icon: Users,
       category: 'dao',
       status: 'available'
     },
     {
       id: 'yield',
-      name: t.language === 'ru' ? 'Yield Farming' : 'Yield Farming',
-      description: t.language === 'ru' ? 'Зарабатывайте на ликвидности' : 'Earn from liquidity provision',
+      name: language === 'ru' ? 'Yield Farming' : 'Yield Farming',
+      description: language === 'ru' ? 'Зарабатывайте на ликвидности' : 'Earn from liquidity provision',
       icon: Zap,
       category: 'defi',
       status: 'coming_soon'
     },
     {
       id: 'insurance',
-      name: t.language === 'ru' ? 'Страхование' : 'Insurance',
-      description: t.language === 'ru' ? 'Защитите свои активы' : 'Protect your assets',
+      name: language === 'ru' ? 'Страхование' : 'Insurance',
+      description: language === 'ru' ? 'Защитите свои активы' : 'Protect your assets',
       icon: Shield,
       category: 'defi',
       status: 'coming_soon'
@@ -68,13 +68,13 @@ export function Apps({ onDatePickerDemo }: AppsProps) {
       case 'available':
         return (
           <Badge className="bg-green-100 text-green-700 border-green-200 dark:bg-green-900/30 dark:text-green-300 dark:border-green-700">
-            {t.language === 'ru' ? 'Доступно' : 'Available'}
+            {language === 'ru' ? 'Доступно' : 'Available'}
           </Badge>
         );
       case 'coming_soon':
         return (
           <Badge variant="outline" className="bg-yellow-100 text-yellow-700 border-yellow-200 dark:bg-yellow-900/30 dark:text-yellow-300 dark:border-yellow-700">
-            {t.language === 'ru' ? 'Скоро' : 'Coming Soon'}
+            {language === 'ru' ? 'Скоро' : 'Coming Soon'}
           </Badge>
         );
       default:
@@ -85,11 +85,11 @@ export function Apps({ onDatePickerDemo }: AppsProps) {
   const getCategoryName = (category: string) => {
     switch (category) {
       case 'demo':
-        return t.language === 'ru' ? 'Демо' : 'Demo';
+        return language === 'ru' ? 'Демо' : 'Demo';
       case 'defi':
         return 'DeFi';
       case 'gaming':
-        return t.language === 'ru' ? 'Игры' : 'Gaming';
+        return language === 'ru' ? 'Игры' : 'Gaming';
       case 'dao':
         return 'DAO';
       default:
@@ -120,9 +120,9 @@ export function Apps({ onDatePickerDemo }: AppsProps) {
         {/* Header */}
         <div className="flex justify-between items-center mb-6">
           <div>
-            <h1 className="text-2xl font-semibold">{t.apps}</h1>
+            <h1 className="text-2xl font-semibold">{t('apps.title')}</h1>
             <p className="text-sm text-muted-foreground mt-1">
-              {t.language === 'ru' 
+              {language === 'ru' 
                 ? 'Исследуйте экосистему MANETKA' 
                 : 'Explore the MANETKA ecosystem'}
             </p>
@@ -189,15 +189,15 @@ export function Apps({ onDatePickerDemo }: AppsProps) {
           <CardContent className="p-6 text-center">
             <Zap size={32} className="mx-auto mb-3 text-primary" />
             <h3 className="font-semibold mb-2">
-              {t.language === 'ru' ? 'Больше приложений скоро!' : 'More apps coming soon!'}
+              {language === 'ru' ? 'Больше приложений скоро!' : 'More apps coming soon!'}
             </h3>
             <p className="text-sm text-muted-foreground mb-4">
-              {t.language === 'ru' 
+              {language === 'ru' 
                 ? 'Мы постоянно расширяем экосистему MANETKA новыми возможностями' 
                 : 'We are constantly expanding the MANETKA ecosystem with new features'}
             </p>
             <Button variant="outline" className="border-primary text-primary hover:bg-primary/10">
-              {t.language === 'ru' ? 'Узнать больше' : 'Learn more'}
+              {language === 'ru' ? 'Узнать больше' : 'Learn more'}
             </Button>
           </CardContent>
         </Card>

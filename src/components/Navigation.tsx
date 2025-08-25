@@ -10,11 +10,11 @@ export function Navigation({ activeTab, onTabChange }: NavigationProps) {
   const { t } = useLanguage();
   
   const tabs = [
-    { id: 'dashboard', label: t.dashboard, icon: Home },
-    { id: 'wallet', label: t.wallet, icon: Wallet },
-    { id: 'apps', label: t.apps, icon: Grid3X3 },
-    { id: 'refs', label: t.refs, icon: Users },
-    { id: 'nft', label: t.nft, icon: Image },
+    { id: 'dashboard', label: t('nav.dashboard'), icon: Home },
+    { id: 'wallet', label: t('nav.wallet'), icon: Wallet },
+    { id: 'apps', label: t('nav.apps'), icon: Grid3X3 },
+    { id: 'refs', label: t('nav.refs'), icon: Users },
+    { id: 'nft', label: t('nav.nft'), icon: Image },
   ];
 
   return (

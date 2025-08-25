@@ -4,6 +4,7 @@ import { Language, useTranslation } from '../locales/translations';
 interface LanguageContextType {
   language: Language;
   setLanguage: (language: Language) => void;
+  toggleLanguage: () => void;
   t: ReturnType<typeof useTranslation>;
 }
 
@@ -29,8 +30,13 @@ export function LanguageProvider({ children }: LanguageProviderProps) {
     localStorage.setItem('language', newLanguage);
   };
 
+  const toggleLanguage = () => {
+    const newLanguage = language === 'en' ? 'ru' : 'en';
+    setLanguage(newLanguage);
+  };
+
   return (
-    <LanguageContext.Provider value={{ language, setLanguage, t }}>
+    <LanguageContext.Provider value={{ language, setLanguage, toggleLanguage, t }}>
       {children}
     </LanguageContext.Provider>
   );

@@ -9,7 +9,7 @@ export function Social() {
   const socialLinks = [
     {
       name: language === 'ru' ? 'Telegram Чат' : 'Telegram Chat',
-      description: t.openChat,
+      description: language === 'ru' ? 'Открыть чат' : 'Open chat',
       icon: MessageCircle,
       url: 'https://t.me/manetka_chat',
       color: 'bg-blue-100 text-blue-600 dark:bg-blue-900/30 dark:text-blue-300',
@@ -17,7 +17,7 @@ export function Social() {
     },
     {
       name: 'Instagram',
-      description: t.followNews,
+      description: language === 'ru' ? 'Следить за новостями' : 'Follow news',
       icon: Instagram,
       url: 'https://instagram.com/manetka_official',
       color: 'bg-pink-100 text-pink-600 dark:bg-pink-900/30 dark:text-pink-300',
@@ -25,7 +25,7 @@ export function Social() {
     },
     {
       name: 'YouTube',
-      description: t.watchVideos,
+      description: language === 'ru' ? 'Смотреть видео' : 'Watch videos',
       icon: Play,
       url: 'https://youtube.com/manetka',
       color: 'bg-red-100 text-red-600 dark:bg-red-900/30 dark:text-red-300',
@@ -33,7 +33,7 @@ export function Social() {
     },
     {
       name: language === 'ru' ? 'VK Группа' : 'VK Group',
-      description: t.russianCommunity,
+      description: language === 'ru' ? 'Русское сообщество' : 'Russian community',
       icon: MessageCircle,
       url: 'https://vk.com/manetka_official',
       color: 'bg-indigo-100 text-indigo-600 dark:bg-indigo-900/30 dark:text-indigo-300',
@@ -48,25 +48,28 @@ export function Social() {
   return (
     <div className="min-h-screen bg-background pb-32">
       <div className="p-6">
-        <h1 className="text-2xl font-semibold mb-6">{t.community}</h1>
+        <h1 className="text-2xl font-semibold mb-6">{t('social.title')}</h1>
 
         {/* Raid Alert */}
         <Card className="mb-6 bg-gradient-to-r from-orange-50 to-red-50 border-orange-200 dark:from-orange-900/20 dark:to-red-900/20 dark:border-orange-800">
           <CardHeader>
             <CardTitle className="text-orange-800 dark:text-orange-200 flex items-center gap-2">
               <Zap size={20} />
-              {t.raids}
+              {language === 'ru' ? 'Рейды' : 'Raids'}
             </CardTitle>
           </CardHeader>
           <CardContent>
             <p className="text-orange-700 dark:text-orange-300 mb-4">
-              {t.raidsDescription}
+              {language === 'ru' 
+                ? 'Участвуйте в рейдах и получайте дополнительные награды!'
+                : 'Participate in raids and earn additional rewards!'
+              }
             </p>
             <Button 
               onClick={() => handleLinkClick('https://t.me/manetka_raids')}
               className="bg-orange-600 hover:bg-orange-700"
             >
-              {t.joinRaids} 🚀
+              {language === 'ru' ? 'Присоединиться к рейдам' : 'Join raids'} 🚀
             </Button>
           </CardContent>
         </Card>
@@ -99,7 +102,7 @@ export function Social() {
                       onClick={() => handleLinkClick(social.url)}
                       className="shrink-0"
                     >
-                      {t.open}
+                      {t('common.open')}
                       <ExternalLink size={14} className="ml-1" />
                     </Button>
                   </div>
@@ -112,17 +115,17 @@ export function Social() {
         {/* Community Stats */}
         <Card className="mt-8">
           <CardHeader>
-            <CardTitle>{t.communityStats}</CardTitle>
+            <CardTitle>{language === 'ru' ? 'Статистика сообщества' : 'Community Stats'}</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="grid grid-cols-2 gap-4">
               <div className="text-center p-4 bg-muted/50 rounded-lg">
                 <div className="text-2xl font-semibold text-blue-600">6.2K</div>
-                <div className="text-sm text-muted-foreground">{t.totalMembers}</div>
+                <div className="text-sm text-muted-foreground">{language === 'ru' ? 'Всего участников' : 'Total members'}</div>
               </div>
               <div className="text-center p-4 bg-muted/50 rounded-lg">
                 <div className="text-2xl font-semibold text-green-600">24/7</div>
-                <div className="text-sm text-muted-foreground">{t.communitySupport}</div>
+                <div className="text-sm text-muted-foreground">{language === 'ru' ? 'Поддержка сообщества' : 'Community support'}</div>
               </div>
             </div>
           </CardContent>
@@ -132,15 +135,18 @@ export function Social() {
         <Card className="mt-6 bg-gradient-to-r from-purple-50 to-blue-50 border-purple-200 dark:from-purple-900/20 dark:to-blue-900/20 dark:border-purple-800">
           <CardHeader>
             <CardTitle className="text-purple-800 dark:text-purple-200">
-              📧 {t.newsletter}
+              📧 {language === 'ru' ? 'Новостная рассылка' : 'Newsletter'}
             </CardTitle>
           </CardHeader>
           <CardContent>
             <p className="text-purple-700 dark:text-purple-300 mb-4">
-              {t.newsletterDescription}
+              {language === 'ru' 
+                ? 'Подпишитесь на нашу рассылку и получайте последние новости!'
+                : 'Subscribe to our newsletter and get the latest news!'
+              }
             </p>
             <Button variant="outline" className="border-purple-600 text-purple-600 hover:bg-purple-50 dark:border-purple-400 dark:text-purple-400 dark:hover:bg-purple-950">
-              {t.subscribe}
+              {language === 'ru' ? 'Подписаться' : 'Subscribe'}
             </Button>
           </CardContent>
         </Card>

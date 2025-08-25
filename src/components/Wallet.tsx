@@ -15,7 +15,7 @@ export function Wallet() {
 
   // Mock данные для кошельков
   const wallets = [
-    { id: 'all', name: t.allWallets },
+    { id: 'all', name: 'Все кошельки' },
     { id: 'ton-wallet', name: 'TON Wallet' },
     { id: 'tonkeeper', name: 'Tonkeeper' },
     { id: 'ton-space', name: 'TON Space' },
@@ -78,7 +78,7 @@ export function Wallet() {
   return (
     <div className="min-h-screen bg-background pb-32">
       <div className="p-6 space-y-6">
-        <h1 className="text-2xl font-semibold mb-6">{t.wallet}</h1>
+        <h1 className="text-2xl font-semibold mb-6">{t('wallet.title')}</h1>
 
         {/* Wallet Selector */}
         <Select value={selectedWallet} onValueChange={setSelectedWallet}>
@@ -99,15 +99,15 @@ export function Wallet() {
           <CardHeader>
             <CardTitle className="text-primary flex items-center gap-2">
               <BarChart3 size={20} />
-              {t.walletInfo}
+              Информация о кошельке
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-3">
             <p className="text-sm text-foreground">
-              {t.walletInfoDescription}
+              Здесь отображаются балансы всех ваших токенов и заработанные награды
             </p>
             <p className="text-xs text-muted-foreground">
-              {t.walletInfoNote}
+              Награды начисляются автоматически каждый день
             </p>
           </CardContent>
         </Card>
@@ -116,10 +116,10 @@ export function Wallet() {
         <Tabs defaultValue="balances" className="w-full">
           <TabsList className="grid w-full grid-cols-2 bg-muted">
             <TabsTrigger value="balances" className="data-[state=active]:bg-amber-100 data-[state=active]:text-amber-800 dark:data-[state=active]:bg-amber-900/30 dark:data-[state=active]:text-amber-200">
-              {t.balances}
+              Балансы
             </TabsTrigger>
             <TabsTrigger value="stats" className="data-[state=active]:bg-amber-100 data-[state=active]:text-amber-800 dark:data-[state=active]:bg-amber-900/30 dark:data-[state=active]:text-amber-200">
-              {t.statistics}
+              Статистика
             </TabsTrigger>
           </TabsList>
 
@@ -132,16 +132,16 @@ export function Wallet() {
                       <h3 className="font-semibold text-lg mb-1">{token.symbol}</h3>
                       <div className="space-y-1 text-sm">
                         <div className="text-muted-foreground">
-                          <span className="font-medium">{t.balance}:</span> {token.balance}
+                          <span className="font-medium">{t('wallet.balance')}:</span> {token.balance}
                         </div>
                         <div className="text-muted-foreground">
-                          <span className="font-medium">{t.balanceInUSD}:</span> {token.usdBalance}
+                          <span className="font-medium">USD:</span> {token.usdBalance}
                         </div>
                         <div className="text-muted-foreground">
-                          <span className="font-medium">{t.balanceInTON}:</span> {token.tonBalance}
+                          <span className="font-medium">TON:</span> {token.tonBalance}
                         </div>
                         <div className="text-amber-700 dark:text-amber-300">
-                          <span className="font-medium">{t.rewards}:</span> {token.rewards}
+                          <span className="font-medium">Награды:</span> {token.rewards}
                         </div>
                       </div>
                     </div>
@@ -156,7 +156,7 @@ export function Wallet() {
                     className="w-full py-3 bg-amber-500 hover:bg-amber-600 text-white font-medium"
                     size="lg"
                   >
-                    {t.tradeToken}
+                    Обменять токен
                   </Button>
                 </CardContent>
               </Card>
@@ -170,7 +170,7 @@ export function Wallet() {
             <div className="space-y-4">
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="text-sm text-muted-foreground mb-2 block">{t.from}</label>
+                  <label className="text-sm text-muted-foreground mb-2 block">С</label>
                   <Input 
                     type="date" 
                     defaultValue="2000-01-01"
@@ -178,7 +178,7 @@ export function Wallet() {
                   />
                 </div>
                 <div>
-                  <label className="text-sm text-muted-foreground mb-2 block">{t.to}</label>
+                  <label className="text-sm text-muted-foreground mb-2 block">По</label>
                   <Input 
                     type="date" 
                     defaultValue="2025-08-25"
@@ -188,12 +188,12 @@ export function Wallet() {
               </div>
               
               <div className="text-xs text-muted-foreground">
-                {t.from} 2000-01-01 | {t.to} 2025-08-25
+                С 2000-01-01 | По 2025-08-25
               </div>
               
               <Button className="w-full bg-amber-500 hover:bg-amber-600 text-white flex items-center gap-2">
                 <Search size={16} />
-                {t.apply}
+                Применить
               </Button>
             </div>
 
@@ -201,8 +201,8 @@ export function Wallet() {
             <Card>
               <CardContent className="p-0">
                 <div className="grid grid-cols-2 gap-0 border-b border-border p-4 bg-muted/50">
-                  <div className="font-medium text-sm">{t.token}</div>
-                  <div className="font-medium text-sm text-right">{t.income}</div>
+                  <div className="font-medium text-sm">Токен</div>
+                  <div className="font-medium text-sm text-right">Доход</div>
                 </div>
                 
                 <div>
@@ -241,7 +241,7 @@ export function Wallet() {
               className="w-full border-amber-500 text-amber-600 hover:bg-amber-50 dark:hover:bg-amber-950 flex items-center gap-2"
             >
               <Share2 size={16} />
-              {t.shareStatistics}
+              Поделиться статистикой
             </Button>
           </TabsContent>
         </Tabs>

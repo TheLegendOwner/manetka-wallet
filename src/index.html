@@ -33,10 +33,6 @@
   <meta name="theme-color" content="#f59e0b" />
   <meta name="msapplication-TileColor" content="#f59e0b" />
   
-  <!-- Preconnect to external domains -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  
   <!-- Security Headers -->
   <meta http-equiv="X-Content-Type-Options" content="nosniff" />
   <meta http-equiv="X-Frame-Options" content="DENY" />
@@ -44,8 +40,11 @@
   
   <title>MANETKA Wallet</title>
   
+  <!-- Import CSS -->
+  <link rel="stylesheet" href="/styles/globals.css" />
+  
   <style>
-    /* Loading screen styles */
+    /* Critical loading styles */
     #loading-screen {
       position: fixed;
       top: 0;
@@ -146,62 +145,10 @@
     <div class="loading-spinner"></div>
   </div>
   
-  <!-- React App -->
+  <!-- React App Root -->
   <div id="root"></div>
   
-  <script type="module">
-    // Simple module loader for React app
-    import('./App.tsx').then(({ default: App }) => {
-      import('react').then(React => {
-        import('react-dom/client').then(ReactDOM => {
-          const root = ReactDOM.createRoot(document.getElementById('root'));
-          root.render(React.createElement(App));
-          
-          // Hide loading screen and show app
-          setTimeout(() => {
-            const loadingScreen = document.getElementById('loading-screen');
-            const rootElement = document.getElementById('root');
-            
-            loadingScreen.classList.add('fade-out');
-            rootElement.classList.add('loaded');
-            
-            setTimeout(() => {
-              loadingScreen.remove();
-            }, 500);
-          }, 1000);
-        });
-      });
-    }).catch(error => {
-      console.error('Failed to load app:', error);
-      
-      // Show error message
-      document.getElementById('loading-screen').innerHTML = `
-        <div class="loading-logo">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="12" cy="12" r="10"/>
-            <path d="m15 9-6 6"/>
-            <path d="m9 9 6 6"/>
-          </svg>
-        </div>
-        <div class="loading-text">Loading Failed</div>
-        <div class="loading-subtitle">Please refresh the page</div>
-      `;
-    });
-  </script>
-  
-  <!-- Service Worker Registration -->
-  <script>
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/sw.js')
-          .then((registration) => {
-            console.log('SW registered: ', registration);
-          })
-          .catch((registrationError) => {
-            console.log('SW registration failed: ', registrationError);
-          });
-      });
-    }
-  </script>
+  <!-- Vite Entry Point -->
+  <script type="module" src="/main.tsx"></script>
 </body>
 </html>
