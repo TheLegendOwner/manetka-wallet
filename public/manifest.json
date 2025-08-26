@@ -1,0 +1,157 @@
+{
+  "name": "MANETKA WALLET",
+  "short_name": "MANETKA",
+  "description": "Secure crypto wallet for MANETKA stablecoin with TON Connect integration, passive income, NFT boosts, and referral rewards.",
+  "version": "1.0.0",
+  "manifest_version": 3,
+  
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  
+  "theme_color": "#f59e0b",
+  "background_color": "#fefefe",
+  
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/favicon.svg",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/favicon.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ],
+  
+  "categories": [
+    "finance",
+    "productivity",
+    "utilities"
+  ],
+  
+  "screenshots": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "320x568",
+      "type": "image/svg+xml",
+      "platform": "narrow",
+      "label": "MANETKA WALLET Dashboard"
+    },
+    {
+      "src": "/favicon.svg",
+      "sizes": "768x1024", 
+      "type": "image/svg+xml",
+      "platform": "wide",
+      "label": "MANETKA WALLET Features"
+    }
+  ],
+  
+  "shortcuts": [
+    {
+      "name": "Dashboard",
+      "short_name": "Dashboard",
+      "description": "View your balance and rewards",
+      "url": "/?screen=dashboard",
+      "icons": [
+        {
+          "src": "/favicon.svg",
+          "sizes": "96x96",
+          "type": "image/svg+xml"
+        }
+      ]
+    },
+    {
+      "name": "Wallet",
+      "short_name": "Wallet",
+      "description": "Manage your wallets",
+      "url": "/?screen=wallet",
+      "icons": [
+        {
+          "src": "/favicon.svg",
+          "sizes": "96x96",
+          "type": "image/svg+xml"
+        }
+      ]
+    },
+    {
+      "name": "NFT Boosts",
+      "short_name": "NFT",
+      "description": "View your NFT collection",
+      "url": "/?screen=nft",
+      "icons": [
+        {
+          "src": "/favicon.svg",
+          "sizes": "96x96", 
+          "type": "image/svg+xml"
+        }
+      ]
+    },
+    {
+      "name": "Referrals",
+      "short_name": "Refs",
+      "description": "Invite friends and earn rewards",
+      "url": "/?screen=refs",
+      "icons": [
+        {
+          "src": "/favicon.svg",
+          "sizes": "96x96",
+          "type": "image/svg+xml"
+        }
+      ]
+    }
+  ],
+  
+  "share_target": {
+    "action": "/",
+    "method": "GET",
+    "params": {
+      "title": "title",
+      "text": "text",
+      "url": "url"
+    }
+  },
+  
+  "related_applications": [
+    {
+      "platform": "webapp",
+      "url": "https://manetka-wallet.vercel.app/manifest.json"
+    }
+  ],
+  
+  "prefer_related_applications": false,
+  
+  "launch_handler": {
+    "client_mode": "focus-existing"
+  },
+  
+  "edge_side_panel": {
+    "preferred_width": 400
+  },
+  
+  "protocol_handlers": [
+    {
+      "protocol": "ton",
+      "url": "/?wallet=%s"
+    }
+  ],
+  
+  "file_handlers": [
+    {
+      "action": "/",
+      "accept": {
+        "application/json": [".json"]
+      }
+    }
+  ]
+}

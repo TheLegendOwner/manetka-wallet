@@ -1,21 +1,21 @@
 import { useState, useEffect } from 'react';
-import { Toaster } from './components/ui/sonner';
-import { LanguageProvider } from './contexts/LanguageContext';
-import { ErrorBoundary } from './components/ErrorBoundary';
-import { Onboarding } from './components/Onboarding';
-import { Dashboard } from './components/Dashboard';
-import { Navigation } from './components/Navigation';
-import { Wallet } from './components/Wallet';
-import { Apps } from './components/Apps';
-import { Refs } from './components/Refs';
-import { Social } from './components/Social';
-import { NFT } from './components/NFT';
-import { Profile } from './components/Profile';
-import { DatePickerDemo } from './components/DatePickerDemo';
+import { Toaster } from '../components/ui/sonner';
+import { LanguageProvider } from '../contexts/LanguageContext';
+import { ErrorBoundary } from '../components/ErrorBoundary';
+import { Onboarding } from '../components/Onboarding';
+import { Dashboard } from '../components/Dashboard';
+import { Navigation } from '../components/Navigation';
+import { Wallet } from '../components/Wallet';
+import { Apps } from '../components/Apps';
+import { Refs } from '../components/Refs';
+import { Social } from '../components/Social';
+import { NFT } from '../components/NFT';
+import { Profile } from '../components/Profile';
+import { DatePickerDemo } from '../components/DatePickerDemo';
 
 type Screen = 'onboarding' | 'dashboard' | 'wallet' | 'apps' | 'refs' | 'social' | 'nft' | 'profile' | 'datepicker';
 
-export default function App() {
+export default function HomePage() {
   const [currentScreen, setCurrentScreen] = useState<Screen>('onboarding');
   const [activeTab, setActiveTab] = useState('dashboard');
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -25,7 +25,7 @@ export default function App() {
   useEffect(() => {
     try {
       // Load theme from localStorage
-      const savedTheme = localStorage.getItem('theme');
+      const savedTheme = localStorage?.getItem('theme');
       if (savedTheme === 'dark') {
         setIsDarkMode(true);
         document.documentElement.classList.add('dark');
@@ -35,7 +35,7 @@ export default function App() {
       }
 
       // Check if onboarding was completed
-      const onboardingCompleted = localStorage.getItem('onboarding-completed');
+      const onboardingCompleted = localStorage?.getItem('onboarding-completed');
       const isCompleted = onboardingCompleted === 'true';
       setIsOnboardingCompleted(isCompleted);
 
@@ -82,10 +82,10 @@ export default function App() {
       
       if (newIsDarkMode) {
         document.documentElement.classList.add('dark');
-        localStorage.setItem('theme', 'dark');
+        localStorage?.setItem('theme', 'dark');
       } else {
         document.documentElement.classList.remove('dark');
-        localStorage.setItem('theme', 'light');
+        localStorage?.setItem('theme', 'light');
       }
     } catch (error) {
       console.error('Error toggling theme:', error);
@@ -95,7 +95,7 @@ export default function App() {
   const handleConnect = () => {
     try {
       // Mark onboarding as completed
-      localStorage.setItem('onboarding-completed', 'true');
+      localStorage?.setItem('onboarding-completed', 'true');
       setIsOnboardingCompleted(true);
       
       setCurrentScreen('dashboard');
@@ -167,7 +167,7 @@ export default function App() {
   // Reset onboarding (for development/testing purposes)
   const handleResetOnboarding = () => {
     try {
-      localStorage.removeItem('onboarding-completed');
+      localStorage?.removeItem('onboarding-completed');
       setIsOnboardingCompleted(false);
       setCurrentScreen('onboarding');
       updateURL('onboarding');
